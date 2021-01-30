@@ -17,24 +17,24 @@ import utils
 class FakeURGNode:
     def __init__(self):
 
-        self.UPDATE_RATE = float(rospy.get_param("~update_rate", 10.0))
-        self.THETA_DISCRETIZATION = float(rospy.get_param("~theta_discretization", 656))
-        self.MIN_RANGE_METERS = float(rospy.get_param("~min_range_meters", 0.02))
-        self.MAX_RANGE_METERS = float(rospy.get_param("~max_range_meters", 5.6))
-        self.ANGLE_STEP = float(rospy.get_param("~angle_step", 0.00613592332229))
-        self.ANGLE_MIN = float(rospy.get_param("~angle_min", -2.08621382713))
-        self.ANGLE_MAX = float(rospy.get_param("~angle_max", 2.09234976768))
+        self.UPDATE_RATE = float(rospy.get_param("~update_rate"))
+        self.THETA_DISCRETIZATION = float(rospy.get_param("~theta_discretization"))
+        self.MIN_RANGE_METERS = float(rospy.get_param("~min_range_meters"))
+        self.MAX_RANGE_METERS = float(rospy.get_param("~max_range_meters"))
+        self.ANGLE_STEP = float(rospy.get_param("~angle_step"))
+        self.ANGLE_MIN = float(rospy.get_param("~angle_min"))
+        self.ANGLE_MAX = float(rospy.get_param("~angle_max"))
         self.ANGLES = np.arange(
             self.ANGLE_MIN, self.ANGLE_MAX, self.ANGLE_STEP, dtype=np.float32
         )
-        self.CAR_LENGTH = float(rospy.get_param("~car_length", 0.33))
-        self.Z_SHORT = float(rospy.get_param("~z_short", 0.03))
-        self.Z_MAX = float(rospy.get_param("~z_max", 0.16))
-        self.Z_BLACKOUT_MAX = float(rospy.get_param("~z_blackout_max", 50))
-        self.Z_RAND = float(rospy.get_param("~z_rand", 0.01))
-        self.Z_HIT = float(rospy.get_param("~z_hit", 0.8))
-        self.Z_SIGMA = float(rospy.get_param("~z_sigma", 0.03))
-        self.TF_PREFIX = str(rospy.get_param("~tf_prefix", "").rstrip("/"))
+        self.CAR_LENGTH = float(rospy.get_param("vesc/chassis_length"))
+        self.Z_SHORT = float(rospy.get_param("~z_short"))
+        self.Z_MAX = float(rospy.get_param("~z_max"))
+        self.Z_BLACKOUT_MAX = float(rospy.get_param("~z_blackout_max"))
+        self.Z_RAND = float(rospy.get_param("~z_rand"))
+        self.Z_HIT = float(rospy.get_param("~z_hit"))
+        self.Z_SIGMA = float(rospy.get_param("~z_sigma"))
+        self.TF_PREFIX = str(rospy.get_param("~car_name").rstrip("/"))
         if len(self.TF_PREFIX) > 0:
             self.TF_PREFIX = self.TF_PREFIX + "/"
 

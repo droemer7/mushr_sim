@@ -1,6 +1,14 @@
 laser_node:
+  update_rate: 10.0
+  theta_discretization: 656
   angle_min: -3.14159
   angle_max: 3.14159 
   angle_step: 0.00872665 
   min_range_meters: 0.02 
   max_range_meters: 10.0
+  z_short: 0.03
+  z_max: 0.16
+  z_blackout_max: 50
+  z_rand: 0.01
+  z_hit: 0.8
+  z_sigma: 0.03
