@@ -1,6 +1,6 @@
 <!-- -*- mode: XML -*- -->
 <launch>
-    <arg name="car_name" />
+    <arg name="car_name" default="car"/>
     <arg name="racecar_version" />
     <arg name="vesc_config" default="$(find vesc_main)/config/$(arg racecar_version)/vesc.yaml" />
     <arg name="mux_output_topic" default="ackermann_cmd" />
