@@ -19,8 +19,8 @@ class FakeURGNode:
 
         self.UPDATE_RATE = float(rospy.get_param("~update_rate"))
         self.THETA_DISCRETIZATION = float(rospy.get_param("~theta_discretization"))
-        self.MIN_RANGE_METERS = float(rospy.get_param("~min_range_meters"))
-        self.MAX_RANGE_METERS = float(rospy.get_param("~max_range_meters"))
+        self.MIN_RANGE_METERS = float(rospy.get_param("~range_min"))
+        self.MAX_RANGE_METERS = float(rospy.get_param("~range_max"))
         self.ANGLE_STEP = float(rospy.get_param("~angle_step"))
         self.ANGLE_MIN = float(rospy.get_param("~angle_min"))
         self.ANGLE_MAX = float(rospy.get_param("~angle_max"))
