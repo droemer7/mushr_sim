@@ -1,4 +1,4 @@
-laser_node:
+laser:
   update_rate: 10.0
   theta_discretization: 656
   angle_min: -3.14159
