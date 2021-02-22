@@ -40,7 +40,7 @@ class FakeURGNode:
 
         map_msg = self.get_map()
         occ_map = range_libc.PyOMap(map_msg)
-        max_range_px = int(self.MAX_RANGE_METERS / map_msg.info.resolution)
+        max_range_px = round(self.MAX_RANGE_METERS / map_msg.info.resolution)
         self.range_method = range_libc.PyCDDTCast(
             occ_map, max_range_px, self.THETA_DISCRETIZATION
         )
@@ -143,6 +143,7 @@ class FakeURGNode:
             (laser_pose_x, laser_pose_y, laser_angle), dtype=np.float32
         ).reshape(1, 3)
         self.range_method.calc_range_repeat_angles(range_pose, self.ANGLES, ranges)
+        ranges = np.clip(ranges, 0.0, self.MAX_RANGE_METERS)
         self.noise_laser_scan(ranges)
         ls.ranges = ranges.tolist()
         self.laser_pub.publish(ls)
