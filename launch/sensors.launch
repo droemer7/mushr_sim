@@ -1,0 +1,13 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <arg name="car_name" default="car"/>
+  <arg name="racecar_version"/>
+  <arg name="standalone" default="false"/>
+
+  <rosparam file="$(find mushr_sim)/config/$(arg racecar_version)/sensors.yaml" command="load"/>
+
+  <node pkg="mushr_sim" type="fake_urg_node.py" name="laser" output="screen" >
+    <param name="car_name"   value="$(arg car_name)"/>
+    <param name="standalone" value="$(arg standalone)"/>
+  </node>
+</launch>

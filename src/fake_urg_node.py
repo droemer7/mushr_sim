@@ -35,6 +35,7 @@ class FakeURGNode:
         self.Z_HIT = float(rospy.get_param("~z_hit"))
         self.Z_SIGMA = float(rospy.get_param("~z_sigma"))
         self.TF_PREFIX = str(rospy.get_param("~car_name").rstrip("/"))
+        self.STANDALONE = bool(rospy.get_param("~standalone"))
         if len(self.TF_PREFIX) > 0:
             self.TF_PREFIX = self.TF_PREFIX + "/"
 
@@ -44,21 +45,33 @@ class FakeURGNode:
         self.range_method = range_libc.PyCDDTCast(
             occ_map, max_range_px, self.THETA_DISCRETIZATION
         )
+        if not self.STANDALONE:
+            self.tl = tf.TransformListener()
 
-        self.tl = tf.TransformListener()
+            try:
+                self.tl.waitForTransform(self.TF_PREFIX + "base_link",
+                                         self.TF_PREFIX + "laser_link",
+                                         rospy.Time(0),
+                                         rospy.Duration(2.0)
+                                        )
+                position, orientation = self.tl.lookupTransform(
+                    self.TF_PREFIX + "base_link",
+                    self.TF_PREFIX + "laser_link",
+                    rospy.Time(0)
+                )
+                self.x_offset = position[0]
+            except Exception:
+                rospy.logwarn("Laser: transform from {0} to {1} not found, "
+                              "using no transformation".
+                              format(self.TF_PREFIX + "base_link",
+                                     self.TF_PREFIX + "laser_link"
+                                    )
+                             )
+                self.x_offset = 0.0
+        else:
+            self.x_offset = 0.0
 
-        while not self.tl.frameExists(self.TF_PREFIX + "base_link"):
-            pass
-
-        while not self.tl.frameExists(self.TF_PREFIX + "laser_link"):
-            pass
-
-        position, orientation = self.tl.lookupTransform(
-            self.TF_PREFIX + "base_link", self.TF_PREFIX + "laser_link", rospy.Time(0)
-        )
-        self.x_offset = position[0]
-
-        self.laser_pub = rospy.Publisher("scan", LaserScan, queue_size=1)
+        self.laser_pub = rospy.Publisher("laser/scan", LaserScan, queue_size=1)
 
         self.update_timer = rospy.Timer(
             rospy.Duration.from_sec(1.0 / self.UPDATE_RATE), self.timer_cb
@@ -127,7 +140,11 @@ class FakeURGNode:
                 "/map", self.TF_PREFIX + "base_link", rospy.Time(0)
             )
         except Exception:
-            return
+            if self.STANDALONE:
+                base_to_map_trans = np.zeros(2, dtype=np.float32)
+                base_to_map_rot = np.zeros(4, dtype=np.float32)
+            else:
+                return
 
         laser_quat = Quaternion()
         laser_quat.x = base_to_map_rot[0]
