@@ -3,7 +3,7 @@
     <arg name="car_name" default="car"/>
 
     <!-- Could be racecar-mit, racecar-uw-tx2, or racecar-uw-nano -->
-    <arg name="racecar_version"/>
+    <arg name="racecar_version" default="racecar-uw-nano"/>
 
     <!-- The colors of the racecar, should be of the form "-<platform_color>-<inset_color>" -->
     <!-- An empty string will result in the default URDF -->
@@ -14,13 +14,13 @@
     <param name="robot_description" textfile="$(find mushr_description)/robots/$(arg racecar_version)$(arg racecar_color).urdf"/>
 
     <include file="$(find mushr_base)/launch/racecar_state.launch">
+      <arg name="car_name"        value="$(arg car_name)"/>
       <arg name="force_in_bounds" value="true"/>
-      <arg name="car_name" value="$(arg car_name)"/>
     </include>
 
     <!-- State Publisher -->
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="state_publisher">
-      <param name="tf_prefix" value="$(arg car_name)"/>
+      <param name="tf_prefix"         value="$(arg car_name)"/>
       <param name="robot_description" value="/$(arg car_name)/robot_description"/>
     </node>
 
@@ -35,15 +35,15 @@
     <!-- VESC -->
     <group ns="vesc">
       <include file="$(find mushr_sim)/launch/vesc.launch">
-        <arg name="car_name" value="$(arg car_name)"/>
-        <arg name="racecar_version" value="$(arg racecar_version)"/>
+        <arg name="car_name"         value="$(arg car_name)"/>
+        <arg name="racecar_version"  value="$(arg racecar_version)"/>
         <arg name="mux_output_topic" value="/$(arg car_name)/mux/ackermann_cmd_mux/output"/>
       </include>
     </group>
 
     <!-- Sensors (Laser, Cameras) -->
     <include file="$(find mushr_sim)/launch/sensors.launch">
-      <arg name="car_name" value="$(arg car_name)"/>
+      <arg name="car_name"        value="$(arg car_name)"/>
       <arg name="racecar_version" value="$(arg racecar_version)"/>
     </include>
 </launch>

@@ -4,23 +4,23 @@
   <arg name="car2_name" default="car2"/>
 
   <!-- Map -->
-  <include file="$(find mcl)/launch/map_server.launch"/>
+  <include file="$(find mushr_base)/launch/map_server.launch"/>
 
   <!-- Car 1 -->
   <group ns="$(arg car1_name)">
     <include file="$(find mushr_sim)/launch/single_car.launch" >
-      <arg name="car_name" value="$(arg car1_name)"/>
+      <arg name="car_name"        value="$(arg car1_name)"/>
       <arg name="racecar_version" value="racecar-uw-nano"/>
-      <arg name="racecar_color" value=""/>
+      <arg name="racecar_color"   value=""/>
     </include>
   </group>
 
   <!-- Car 2 -->
   <group ns="$(arg car2_name)">
     <include file="$(find mushr_sim)/launch/single_car.launch" >
-      <arg name="car_name" value="$(arg car2_name)"/>
+      <arg name="car_name"        value="$(arg car2_name)"/>
       <arg name="racecar_version" value="racecar-uw-nano"/>
-      <arg name="racecar_color" value="-green-black"/>
+      <arg name="racecar_color"   value="-green-black"/>
     </include>
   </group>
 </launch>

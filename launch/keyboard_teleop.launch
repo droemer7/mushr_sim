@@ -1,4 +1,3 @@
-<!-- -*- mode: XML -*- -->
 <launch>
     <rosparam command="load" file="$(find mushr_sim)/config/keyboard_teleop.yaml"/>
 
