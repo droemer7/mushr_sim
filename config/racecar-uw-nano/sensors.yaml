@@ -5,7 +5,7 @@ laser:
   angle_max: 3.14159
   angle_step: 0.00872665
   range_min: 0.02
-  range_max: 10.0
+  range_max: 16.0
   z_short: 0.03
   z_max: 0.16
   z_blackout_max: 50
