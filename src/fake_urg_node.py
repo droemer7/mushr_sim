@@ -52,7 +52,7 @@ class FakeURGNode:
                 self.tl.waitForTransform(self.TF_PREFIX + "base_link",
                                          self.TF_PREFIX + "laser_link",
                                          rospy.Time(0),
-                                         rospy.Duration(2.0)
+                                         rospy.Duration(10.0)
                                         )
                 position, orientation = self.tl.lookupTransform(
                     self.TF_PREFIX + "base_link",
@@ -161,7 +161,7 @@ class FakeURGNode:
         ).reshape(1, 3)
         self.range_method.calc_range_repeat_angles(range_pose, self.ANGLES, ranges)
         ranges = np.clip(ranges, 0.0, self.MAX_RANGE_METERS)
-        self.noise_laser_scan(ranges)
+        #self.noise_laser_scan(ranges)
         ls.ranges = ranges.tolist()
         self.laser_pub.publish(ls)
 
